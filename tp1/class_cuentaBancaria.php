@@ -1,5 +1,5 @@
 <?php
-include "tp2\punto1.php";
+include "tp2\class_persona.php";
 class cuentaBancaria
 {
     private int $numeroCuentaInt;
@@ -7,7 +7,7 @@ class cuentaBancaria
     private float $saldoActualInt;
     private int $interesAnualInt;
 
-    public function __construct($numeroCuentaExt,$objPersonaExt, $saldoActualExt, $interesAnualExt)
+    public function __construct($numeroCuentaExt, $objPersonaExt, $saldoActualExt, $interesAnualExt)
     {
         $this->numeroCuentaInt = $numeroCuentaExt;
         $this->objPersonaInt = $objPersonaExt->getNumeroDocumento();
@@ -61,8 +61,8 @@ class cuentaBancaria
     }
 }
 
-$objPersona = new Persona("valentin","villar","dni","981237");
+$objPersona = new Persona("valentin", "rios", "dni", "981237");
 
-$obj2 = new cuentaBancaria(1312,$objPersona,400, 365);
+$obj2 = new cuentaBancaria(1312, $objPersona, 400, 365);
 
-echo "el dni del cliente es: ". $obj2;
+echo "el dni del cliente es: " . $obj2;

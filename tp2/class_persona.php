@@ -1,18 +1,20 @@
 <?php
-class Persona {
-    private string $nombre;
-    private string $apellido;
-    private string $tipo; 
-    private string $numeroDocumento;
+class Persona
+{
+  private string $nombre;
+  private string $apellido;
+  private string $tipo;
+  private string $numeroDocumento;
 
-    public function __construct($nombreExt,$apellidoExt,$tipoExt,$numeroDocumentoExt){
-        $this->nombre = $nombreExt ; 
-        $this->apellido = $apellidoExt;
-        $this->tipo = $tipoExt;
-        $this->numeroDocumento = $numeroDocumentoExt;
-    }
+  public function __construct($nombreExt, $apellidoExt, $tipoExt, $numeroDocumentoExt)
+  {
+    $this->nombre = $nombreExt;
+    $this->apellido = $apellidoExt;
+    $this->tipo = $tipoExt;
+    $this->numeroDocumento = $numeroDocumentoExt;
+  }
 
-    public function getNombre()
+  public function getNombre()
   {
     return $this->nombre;
   }
@@ -21,7 +23,7 @@ class Persona {
   {
     return $this->apellido;
   }
-  
+
   public function getTipo()
   {
     return $this->tipo;
@@ -51,14 +53,12 @@ class Persona {
   {
     $this->numeroDocumento = $numeroDocumento;
   }
-  public function __toString(){
+  public function __toString()
+  {
     $respuesta = "nombre: {$this->getnombre()}\n";
     $respuesta .= "apellido: {$this->getApellido()}\n";
     $respuesta .= "tipo: {$this->getTipo()}\n";
     $respuesta .= "numero de documento: {$this->getNumeroDocumento()}\n";
     return $respuesta;
-
   }
 }
-
-
