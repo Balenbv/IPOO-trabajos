@@ -1,15 +1,16 @@
 <?php
+include "tp2\punto1.php";
 class cuentaBancaria
 {
     private int $numeroCuentaInt;
-    private int $dniClienteInt;
+    private int $objPersonaInt;
     private float $saldoActualInt;
     private int $interesAnualInt;
 
-    public function __construct($numeroCuentaExt, $dniClienteExt, $saldoActualExt, $interesAnualExt)
+    public function __construct($numeroCuentaExt,$objPersonaExt, $saldoActualExt, $interesAnualExt)
     {
         $this->numeroCuentaInt = $numeroCuentaExt;
-        $this->dniClienteInt = $dniClienteExt;
+        $this->objPersonaInt = $objPersonaExt->getNumeroDocumento();
         $this->saldoActualInt = $saldoActualExt;
         $this->interesAnualInt = $interesAnualExt;
     }
@@ -21,7 +22,7 @@ class cuentaBancaria
 
     public function getDniCliente()
     {
-        return $this->dniClienteInt;
+        return $this->objPersonaInt;
     }
 
     public function getSaldoActual()
@@ -55,9 +56,13 @@ class cuentaBancaria
 
     public function __toString()
     {
-        $this->actualizarSaldo();
-        return "el saldo actual es: {$this->getSaldoActual()}";
+        // $this->actualizarSaldo();
+        return $this->getDniCliente();
     }
 }
-$obj = new cuentaBancaria(38, 45561002, 100, 36500);
-echo $obj;
+
+$objPersona = new Persona("valentin","villar","dni","981237");
+
+$obj2 = new cuentaBancaria(1312,$objPersona,400, 365);
+
+echo "el dni del cliente es: ". $obj2;
