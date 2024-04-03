@@ -2,15 +2,15 @@
 include "tp2\class_persona.php";
 class cuentaBancaria
 {
-    private int $numeroCuentaInt;
-    private int $objPersonaInt;
-    private float $saldoActualInt;
-    private int $interesAnualInt;
+    private $numeroCuentaInt;
+    private $objPersonaInt;
+    private $saldoActualInt;
+    private $interesAnualInt;
 
     public function __construct($numeroCuentaExt, $objPersonaExt, $saldoActualExt, $interesAnualExt)
     {
         $this->numeroCuentaInt = $numeroCuentaExt;
-        $this->objPersonaInt = $objPersonaExt->getNumeroDocumento();
+        $this->objPersonaInt = $objPersonaExt;
         $this->saldoActualInt = $saldoActualExt;
         $this->interesAnualInt = $interesAnualExt;
     }
@@ -49,15 +49,13 @@ class cuentaBancaria
     {
         if ($cantidad <= $this->saldoActualInt) {
             $this->saldoActualInt -= $cantidad;
-        } else {
-            return "no hay saldo suficiente";
-        }
+        } 
     }
 
     public function __toString()
     {
         // $this->actualizarSaldo();
-        return $this->getDniCliente();
+        return "asdad".$this->getDniCliente();
     }
 }
 
@@ -65,4 +63,4 @@ $objPersona = new Persona("valentin", "rios", "dni", "981237");
 
 $obj2 = new cuentaBancaria(1312, $objPersona, 400, 365);
 
-echo "el dni del cliente es: " . $obj2;
+
