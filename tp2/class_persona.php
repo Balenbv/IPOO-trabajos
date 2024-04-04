@@ -14,10 +14,6 @@ class Persona
     $this->numeroDocumento = $numeroDocumentoExt;
   }
 
-  /**
-   * este es el motodo de acceso al atributos nombre
-   * @return string
-   */
   public function getNombre()
   {
     return $this->nombre;
