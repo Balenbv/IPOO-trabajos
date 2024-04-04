@@ -58,7 +58,7 @@ class Persona
     $respuesta = "nombre: {$this->getnombre()}\n";
     $respuesta .= "apellido: {$this->getApellido()}\n";
     $respuesta .= "tipo: {$this->getTipo()}\n";
-    $respuesta .= "numero de documento: {$this->getNumeroDocumento()}\n";
+    $respuesta .= "numero de documento: {$this->getNumeroDocumento()}";
     return $respuesta;
   }
 }

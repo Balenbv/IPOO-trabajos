@@ -1,0 +1,7 @@
+<?php
+include_once 'class_libro.php';
+include_once 'tp2\p2\class_Persona.php';
+$personaLibro = new Persona('valentin', 'bustos villar', 'dni', '091837');
+$libroTest = new Libro(123, "valen y sus esbirros", 1380, 'migue post servicio social', $personaLibro, 800, "valen se volvio periquedo y migue intentado cambiar su rumbo se volvio un villano violento");
+
+echo $libroTest;

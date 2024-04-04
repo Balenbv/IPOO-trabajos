@@ -90,7 +90,7 @@ cierra a las: {$this->getHora_Hasta()}hs
 el negocio esta: {$this->getEstado()}
 la direccion es: {$this->getDireccion()}
 ******************
-los datos del duenio son: \n{$this->getDuenio()}
+los datos del duenio son:\n {$this->getDuenio()}
 ";
     }
 }
