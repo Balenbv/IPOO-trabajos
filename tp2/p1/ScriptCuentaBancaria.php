@@ -1,7 +1,6 @@
 <?php
-
-include_once "cuentaBancaria.php";
-include_once "persona.php";
+include_once "CuentaBancaria.php";
+include_once "Persona.php";
 
 $persona = new Persona("diego","rios","tipo","123456");
 $testCuentaBancaria = new CuentaBancaria(1,$persona,10,1500);
