@@ -133,12 +133,11 @@ class Banco
 
     public function obtenerCajasDeAhorro()
     {
-        // $cajasDeAhorro = "";
-        // foreach ($this->getColeccionCajasDeAhorro() as $cajaDeAhorro) {
-        //     $cajasDeAhorro .= "\n\n------------\n" . $cajaDeAhorro;
-        // }\
-        print_r($this->getColeccionCajasDeAhorro());
-        // return $cajasDeAhorro;
+        $cajasDeAhorro = "";
+        foreach ($this->getColeccionCajasDeAhorro() as $cajaDeAhorro) {
+            $cajasDeAhorro .= "\n\n------------\n" . $cajaDeAhorro;
+        }
+        return $cajasDeAhorro;
     }
 
     public function obtenerCuentasCorrientes()

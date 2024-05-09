@@ -36,7 +36,7 @@ class Cuenta{
     }
 
     public function __toString(){
-        return "{$this->getObjCliente()} \n{$this->getSaldo()} "; 
+        return "{$this->getObjCliente()} \nSaldo: {$this->getSaldo()} "; 
     }
 
 }

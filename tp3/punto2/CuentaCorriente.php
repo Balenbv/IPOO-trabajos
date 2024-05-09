@@ -17,6 +17,6 @@ class CuentaCorriente extends Cuenta{
     }
 
     public function __toString() {
-        return "Cuenta Corriente: \n" . parent::__toString() . "\n";
+        return "Cuenta Corriente: \n" . parent::__toString() . "\nMonto descubierto: {$this->getMontoDescubierto()}\n";
     }
 }

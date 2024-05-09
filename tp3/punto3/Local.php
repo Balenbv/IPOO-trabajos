@@ -114,9 +114,8 @@ class Local
         return $productoMasbarato;
     }
 
-    public function codigosDeLosProductos()
+    public function codigosDeLosProductos($coleccionProductos)
     {
-        $coleccionProductos[] = $this->obtenerProductosEnStock();
         $coleccionCodigos = [];
 
         foreach ($coleccionProductos as $producto) {
@@ -170,26 +169,42 @@ class Local
 
     public function informarProductosMasVendidos($anio, $n)
     {
-        $coleccionProductos = $this->obtenerProductosEnStock();
-        $coleccionCodigos = $this->codigosDeLosProductos();
+        $coleccionCodigos = $this->codigosDeLosProductos($this->obtenerProductosEnStock());
 
         $coleccionVentasEseAnio = $this->obtenerVentasPorAnio($anio);
         $arrayProductosVendidosRepetidos = $this->obtenerProductosVendidosPorAnio($coleccionVentasEseAnio);
         $coleccionProductosMismoCodigoAcumulados = $this->acumularProductos($coleccionCodigos, $arrayProductosVendidosRepetidos);
 
-        uasort($coleccionProductosMismoCodigoAcumulados[1], 'ordenarArray');
+        $this->bubbleSort($coleccionProductosMismoCodigoAcumulados[1]);
 
         return array_slice($coleccionProductosMismoCodigoAcumulados[0], 0, $n);
     }
 
-    public function ordenarArray($a, $b)
-    {
-        if ($a == $b) {
-            $retorno = 0;
-        } else {
-            $retorno = ($a < $b) ? 1 : -1;
+    function bubbleSort($arr) {
+        $n = count($arr);
+        for ($i = 0; $i < $n - 1; $i++) {
+            for ($j = 0; $j < $n - $i - 1; $j++) {
+                if ($arr[$j] > $arr[$j + 1]) {
+                    $temp = $arr[$j];
+                    $arr[$j] = $arr[$j + 1];
+                    $arr[$j + 1] = $temp;
+                }
+            }
         }
-
-        return $retorno;
+        return $arr;
     }
+
+    public function promedioVentasImportados(){
+        $codigosImportados = $this->codigosDeLosProductos($this->getColeccionDeProductosImportados());
+        
+
+    }
+
+
 }
+
+
+    
+// $obj = new Regional(1, "descripcion", 1, 1, 1, 1, 1);
+// $prueba = $obj instanceof Regional;
+  

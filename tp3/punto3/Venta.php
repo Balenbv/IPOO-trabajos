@@ -51,6 +51,7 @@ class Venta
         }
         return $total;
     }
+    
     public function __toString()
     {
         return "Fecha: {$this->getFecha()}\nCliente: {$this->getObjCliente()}\nProductos: {$this->getColeccionDeProductos()}\n";
