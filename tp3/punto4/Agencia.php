@@ -94,13 +94,13 @@ class Agencia
             if ($cantPersonas < $objPaquete->getCantidadTotalPlazas()) {
                 $cliente = new Cliente($tipoDoc, $numDoc);
                 if ($esOnline) {
-                    $venta = new OnLine(date('y - m - d'), $objPaquete, $cantPersonas, $cliente, 20);
+                    $venta = new OnLine(date('Y-m-d'), $objPaquete, $cantPersonas, $cliente, 20);
                     $importeFinal = $venta->ImporteFinal();
                     $ventasTotates = $this->getColeccionObjVentas();
                     $ventasTotates[] = $venta;
                     $this->setColeccionObjVentas($ventasTotates);
                 } else {
-                    $venta = new Venta(date('y - m - d'), $objPaquete, $cantPersonas, $cliente);
+                    $venta = new Venta(date('Y-m-d'), $objPaquete, $cantPersonas, $cliente);
                     $importeFinal = $venta->ImporteFinal();
                     $ventasTotates = $this->getColeccionObjVentasOnLine();
                     $ventasTotates[] = $venta;
@@ -110,4 +110,21 @@ class Agencia
         }
         return $importeFinal;
     }
+
+    /**
+     * informarPaquetesTuristicos(fecha,destino): método que retorna una colección con todos los
+     * paquetes que se realizan en una fecha y a un destino.
+     */
+
+    public function informarPaquetesTuristicos($fecha, $destino){
+        $paquetesRequeridos = [];
+       foreach($this->getPaquetesTuristicos() as $paquete){
+        if ($paquete->getFechaDesde() == $fecha && $paquete->getObjDestino()->getNombre() == $destino){
+            $paquetesRequeridos[] = $paquete;
+        }
+       }
+       return $paquetesRequeridos;
+    }
+
+    
 }

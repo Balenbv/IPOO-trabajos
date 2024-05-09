@@ -3,14 +3,14 @@
 class PaqueteTuristico {
     private $fechaDesde;
     private $cantidadDias;
-    private $destino;
+    private $objDestino;
     private $cantidadTotalPlazas;
     private $plazasDisponibles;
 
-    public function __construct($fechaDesde, $cantidadDias, $destino, $cantidadTotalPlazas) {
+    public function __construct($fechaDesde, $cantidadDias, $objDestino, $cantidadTotalPlazas) {
         $this->fechaDesde = $fechaDesde;
         $this->cantidadDias = $cantidadDias;
-        $this->destino = $destino;
+        $this->objDestino = $objDestino;
         $this->cantidadTotalPlazas = $cantidadTotalPlazas;
         $this->plazasDisponibles = $cantidadTotalPlazas;
     }
@@ -22,8 +22,8 @@ class PaqueteTuristico {
         return $this->cantidadDias;
     }
 
-    public function getDestino() {
-        return $this->destino;
+    public function getObjDestino() {
+        return $this->objDestino;
     }
 
     public function getCantidadTotalPlazas() {
@@ -42,8 +42,8 @@ class PaqueteTuristico {
         $this->cantidadDias = $cantidadDias;
     }
 
-    public function setDestino($destino) {
-        $this->destino = $destino;
+    public function setObjDestino($objDestino) {
+        $this->objDestino = $objDestino;
     }
 
     public function setCantidadTotalPlazas($cantidadTotalPlazas) {
@@ -56,6 +56,6 @@ class PaqueteTuristico {
 
     public function __toString()
     {
-        return "Fecha desde: {$this->getFechaDesde()}\nCantidad de dias: {$this->getCantidadDias()}\nDestino: {$this->getDestino()}\nCantidad total de plazas: {$this->getCantidadTotalPlazas()}\nPlazas disponibles: {$this->getPlazasDisponibles()}\n";
+        return "Fecha desde: {$this->getFechaDesde()}\nCantidad de dias: {$this->getCantidadDias()}\nobjDestino: {$this->getobjDestino()}\nCantidad total de plazas: {$this->getCantidadTotalPlazas()}\nPlazas disponibles: {$this->getPlazasDisponibles()}\n";
     }
 }
