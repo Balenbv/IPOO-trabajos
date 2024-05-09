@@ -55,12 +55,12 @@ class Agencia
         $this->coleccionObjVentasOnLine = $coleccionObjVentasOnLine;
     }
 
-    public function existePaquete($objVenta)
+    public function existePaquete($objPaquete)
     {
         $i = 0;
         $existe = false;
         do {
-            if ($this->getPaquetesTuristicos()[$i]->getFechaDesde() == $objVenta->getFechaDesde()) {
+            if ($this->getPaquetesTuristicos()[$i]->getFechaDesde() == $objPaquete->getFechaDesde()) {
                 $existe = true;
             } else {
                 $i++;
@@ -70,30 +70,31 @@ class Agencia
         return $existe;
     }
 
-    public function incorporarPaquete($objVenta)
+    public function incorporarPaquete($objPaquete)
     {
-        if (!$this->existePaquete($objVenta)) {
+        if (!$this->existePaquete($objPaquete)) {
             $coleccionAux = $this->getPaquetesTuristicos();
-            $coleccionAux[] = $objVenta;
+            $coleccionAux[] = $objPaquete;
             $this->setPaquetesTuristicos($coleccionAux);
         }
 
-        return !$this->existePaquete($objVenta);
+        return !$this->existePaquete($objPaquete);
     }
 
-//     incorporarVenta(objPaquete,tipoDoc,numDoc,cantPer, esOnLine): método que recibe por parámetro
-// el paquete, tipo documento, número de documento, la cantidad de personas que van a realizar el 
-// paquete turístico y si se trata o no de una venta on-line (valor true o false). El método retorna el 
-// importe final que debe ser abanado en caso que la venta pudo concretarse con éxito y -1 en caso 
-// contrario.
+    //     incorporarVenta(objPaquete,tipoDoc,numDoc,cantPer, esOnLine): método que recibe por parámetro
+    // el paquete, tipo documento, número de documento, la cantidad de personas que van a realizar el 
+    // paquete turístico y si se trata o no de una venta on-line (valor true o false). El método retorna el 
+    // importe final que debe ser abanado en caso que la venta pudo concretarse con éxito y -1 en caso 
+    // contrario.
 
-    public function incorporarVenta($objPaquete, $tipoDoc, $numDoc, $cantPersonas, $esOnline){
+    public function incorporarVenta($objPaquete, $tipoDoc, $numDoc, $cantPersonas, $esOnline)
+    {
         $importeFinal = -1;
-        if ($this->existePaquete($objPaquete)){
-            if ($cantPersonas < $objPaquete->getCantidadTotalPlazas()){
+        if ($this->existePaquete($objPaquete)) {
+            if ($cantPersonas < $objPaquete->getCantidadTotalPlazas()) {
                 $cliente = new Cliente($tipoDoc, $numDoc);
-                if ($esOnline){
-                    $venta = new OnLine(date('y - m - d'),$objPaquete, $cantPersonas, $cliente, 20);
+                if ($esOnline) {
+                    $venta = new OnLine(date('y - m - d'), $objPaquete, $cantPersonas, $cliente, 20);
                     $importeFinal = $venta->ImporteFinal();
                     $ventasTotates = $this->getColeccionObjVentas();
                     $ventasTotates[] = $venta;
@@ -109,5 +110,4 @@ class Agencia
         }
         return $importeFinal;
     }
-
 }
