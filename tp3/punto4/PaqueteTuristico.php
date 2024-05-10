@@ -6,6 +6,7 @@ class PaqueteTuristico {
     private $objDestino;
     private $cantidadTotalPlazas;
     private $plazasDisponibles;
+    
 
     public function __construct($fechaDesde, $cantidadDias, $objDestino, $cantidadTotalPlazas) {
         $this->fechaDesde = $fechaDesde;

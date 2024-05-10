@@ -60,7 +60,7 @@ class Agencia
         $i = 0;
         $existe = false;
         do {
-            if ($this->getPaquetesTuristicos()[$i]->getFechaDesde() == $objPaquete->getFechaDesde()) {
+            if ($this->getPaquetesTuristicos()[$i]->getFechaDesde() == $objPaquete->getFechaDesde() && $this->getPaquetesTuristicos()[$i]->getObjDestino()->getNombre() == $objPaquete->getObjDestino()->getNombre()) {
                 $existe = true;
             } else {
                 $i++;
@@ -91,7 +91,7 @@ class Agencia
     {
         $importeFinal = -1;
         if ($this->existePaquete($objPaquete)) {
-            if ($cantPersonas < $objPaquete->getCantidadTotalPlazas()) {
+            if ($cantPersonas < $objPaquete->getPlazasDisponibles()) {
                 $cliente = new Cliente($tipoDoc, $numDoc);
                 if ($esOnline) {
                     $venta = new OnLine(date('Y-m-d'), $objPaquete, $cantPersonas, $cliente, 20);
@@ -99,12 +99,14 @@ class Agencia
                     $ventasTotates = $this->getColeccionObjVentas();
                     $ventasTotates[] = $venta;
                     $this->setColeccionObjVentas($ventasTotates);
+                    $objPaquete->setPlazasDisponibles($objPaquete->getPlazasDisponibles() - $cantPersonas);
                 } else {
                     $venta = new Venta(date('Y-m-d'), $objPaquete, $cantPersonas, $cliente);
                     $importeFinal = $venta->ImporteFinal();
                     $ventasTotates = $this->getColeccionObjVentasOnLine();
                     $ventasTotates[] = $venta;
                     $this->setColeccionObjVentasOnLine($ventasTotates);
+                    $objPaquete->setPlazasDisponibles($objPaquete->getPlazasDisponibles() - $cantPersonas);
                 }
             }
         }
@@ -116,15 +118,72 @@ class Agencia
      * paquetes que se realizan en una fecha y a un destino.
      */
 
-    public function informarPaquetesTuristicos($fecha, $destino){
+    public function informarPaquetesTuristicos($fecha, $destino)
+    {
         $paquetesRequeridos = [];
-       foreach($this->getPaquetesTuristicos() as $paquete){
-        if ($paquete->getFechaDesde() == $fecha && $paquete->getObjDestino()->getNombre() == $destino){
-            $paquetesRequeridos[] = $paquete;
+        foreach ($this->getPaquetesTuristicos() as $paquete) {
+            if ($paquete->getFechaDesde() == $fecha && $paquete->getObjDestino()->getNombre() == $destino) {
+                $paquetesRequeridos[] = $paquete;
+            }
         }
-       }
-       return $paquetesRequeridos;
+        return $paquetesRequeridos;
     }
 
-    
+    /**
+     * paqueteMasEcomomico(fecha,destino): método que retorna el paquete turístico mas 
+     * económico para una fecha y un destino.
+     */
+
+    public function paqueteMasEconomico($fecha, $destino)
+    {
+        $paquetesValidos = $this->informarPaquetesTuristicos($fecha, $destino);
+        $paqueteMasBarato = $paquetesValidos[0];
+        foreach ($paquetesValidos as $paquete) { {
+                if ($paquete->getObjDestino()->getPrecioPorDia() < $paqueteMasBarato->getObjDestino()->getPrecioPorDia()) {
+                    $paqueteMasBarato = $paquete;
+                }
+            }
+        }
+        return $paqueteMasBarato;
+    }
+
+    /**
+     * informarConsumoCliente(tipoDoc,numDoc): método que retorna todos los paquetes que
+     * fueron utilizados por la persona identificada con el tipoDoc y numDoc recibidos por
+     * parámetro.
+     */
+
+    public function informarConsumoCliente($tipoDoc, $numDoc){
+        $coleccionVentasCliente = [];
+        foreach($this->getColeccionObjVentas() as $venta){
+            if ($venta->getObjCliente()->getTipoDocumento() == $tipoDoc && $venta->getObjCliente()->getNumeroDocumento() == $numDoc){
+                $coleccionVentasCliente[] = $venta;
+            }
+        }
+        foreach($this->getColeccionObjVentasOnline() as $venta){
+            if ($venta->getObjCliente()->getTipoDocumento() == $tipoDoc && $venta->getObjCliente()->getNumeroDocumento() == $numDoc){
+                $coleccionVentasCliente[] = $venta;
+            }
+        }
+        return $coleccionVentasCliente;
+    }
+
+    /**
+     * informarPaquetesMasVendido(anio, n): retorna los n paquetes turísticos mas vendido en el 
+     * año recibido por parámetro.
+     */
+
+    public function informarPaquetesMasVendido($anio, $n){
+        $ventas = $this->getColeccionObjVentas();
+        $ventasDelAnio = [];
+        foreach($ventas as $venta){
+            if (date("Y", strtotime($ventas->getFecha())) == $anio){
+                $ventasDelAnio[] = $venta;
+            }
+        }
+
+        do{
+            
+        } while (3);
+    }
 }
