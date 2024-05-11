@@ -187,21 +187,38 @@ class Agencia
                 $paquetesDelAnio[] = $venta->getObjPaqueteTuristico();
             }
         }
-        $i = 0;
-        $paquetesAcumulados[] = [];;
+        $paquetesDelAnio;
 
-        foreach ($paquetesDelAnio as $paquete){
-            foreach($paquetesAcumulados as $paqueteAcum){
-                
-                if ($paquete == $paqueteAcum){
+        $paquetesAcumulados = [];
+
+        foreach ($paquetesDelAnio as $paquete) {
+            $identificacion = $paquete->getObjDestino()->getIdentificacion();
+            $found = false;
+            for ($i = 0; $i < count($paquetesAcumulados); $i++) {
+                if ($paquetesAcumulados[$i][0]->getObjDestino()->getIdentificacion() == $identificacion) {
                     $paquetesAcumulados[$i][] = $paquete;
-                } else {
-                    $paquetesAcumulados[] = $paquete;
-                    
+                    $found = true;
+                }
+            }
+            if (!$found) {
+                $paquetesAcumulados[] = [$paquete];
+            }
+        }
+
+        $k = count($paquetesAcumulados);
+        for ($i = 0; $i < $k; $i++) {
+            for ($j = 0; $j < $k - $i - 1; $j++) {
+                if (count($paquetesAcumulados[$j]) < count($paquetesAcumulados[$j + 1])) {
+                    $temp = $paquetesAcumulados[$j];
+                    $paquetesAcumulados[$j] = $paquetesAcumulados[$j + 1];
+                    $paquetesAcumulados[$j + 1] = $temp;
                 }
             }
         }
+
+        while (count($paquetesAcumulados) > $n){
+           array_pop($paquetesAcumulados);
+        }
         print_r($paquetesAcumulados);
     }
-
 }

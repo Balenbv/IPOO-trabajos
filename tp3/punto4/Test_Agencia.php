@@ -9,7 +9,7 @@ include 'tp3\punto4\Agencia.php';
 include 'tp3\punto4\Fecha.php';
 
 $objFechaPaqueteTuristico1 = new Fecha(10, 2, 2010);
-$objFechaPaqueteTuristico2 = new Fecha(20, 6, 2023);
+$objFechaPaqueteTuristico2 = new Fecha(20, 6, 2010);
 $objFechaPaqueteTuristico3 = new Fecha(12, 1, 2010);
 $objFechaPaqueteTuristico4 = new Fecha(10, 4, 2010);
 
@@ -59,4 +59,4 @@ $objAgencia = new Agencia($colDestinos,$colPaquetes,$colVenta,$colVentaOnline);
 
 //$objAgencia->paqueteMasEcomomico("23/05/2014", $objDestino0);
 
-$objAgencia->informarPaquetesMasVendido("2010", 3);
+$objAgencia->informarPaquetesMasVendido("2010", 1);
