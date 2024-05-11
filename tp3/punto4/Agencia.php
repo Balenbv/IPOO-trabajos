@@ -153,15 +153,16 @@ class Agencia
      * parámetro.
      */
 
-    public function informarConsumoCliente($tipoDoc, $numDoc){
+    public function informarConsumoCliente($tipoDoc, $numDoc)
+    {
         $coleccionVentasCliente = [];
-        foreach($this->getColeccionObjVentas() as $venta){
-            if ($venta->getObjCliente()->getTipoDocumento() == $tipoDoc && $venta->getObjCliente()->getNumeroDocumento() == $numDoc){
+        foreach ($this->getColeccionObjVentas() as $venta) {
+            if ($venta->getObjCliente()->getTipoDocumento() == $tipoDoc && $venta->getObjCliente()->getNumeroDocumento() == $numDoc) {
                 $coleccionVentasCliente[] = $venta;
             }
         }
-        foreach($this->getColeccionObjVentasOnline() as $venta){
-            if ($venta->getObjCliente()->getTipoDocumento() == $tipoDoc && $venta->getObjCliente()->getNumeroDocumento() == $numDoc){
+        foreach ($this->getColeccionObjVentasOnline() as $venta) {
+            if ($venta->getObjCliente()->getTipoDocumento() == $tipoDoc && $venta->getObjCliente()->getNumeroDocumento() == $numDoc) {
                 $coleccionVentasCliente[] = $venta;
             }
         }
@@ -173,17 +174,34 @@ class Agencia
      * año recibido por parámetro.
      */
 
-    public function informarPaquetesMasVendido($anio, $n){
-        $ventas = $this->getColeccionObjVentas();
-        $ventasDelAnio = [];
-        foreach($ventas as $venta){
-            if (date("Y", strtotime($ventas->getFecha())) == $anio){
-                $ventasDelAnio[] = $venta;
+    public function informarPaquetesMasVendido($anio, $n)
+    {
+        $paquetesDelAnio = [];
+        foreach ($this->getColeccionObjVentas() as $venta) {
+            if ($venta->getObjPaqueteTuristico()->getObjFecha()->getAnio() == $anio) {
+                $paquetesDelAnio[] = $venta->getObjPaqueteTuristico();
             }
         }
+        foreach ($this->getColeccionObjVentasOnLine() as $venta) {
+            if ($venta->getObjPaqueteTuristico()->getObjFecha()->getAnio() == $anio) {
+                $paquetesDelAnio[] = $venta->getObjPaqueteTuristico();
+            }
+        }
+        $i = 0;
+        $paquetesAcumulados[] = [];;
 
-        do{
-            
-        } while (3);
+        foreach ($paquetesDelAnio as $paquete){
+            foreach($paquetesAcumulados as $paqueteAcum){
+                
+                if ($paquete == $paqueteAcum){
+                    $paquetesAcumulados[$i][] = $paquete;
+                } else {
+                    $paquetesAcumulados[] = $paquete;
+                    
+                }
+            }
+        }
+        print_r($paquetesAcumulados);
     }
+
 }
