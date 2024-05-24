@@ -3,15 +3,14 @@
 class edificio
 {
     private $direccion;
-    private $coleccionInmuebles;
-    private $objPersonaAdministrador;
+    private $objAdministrador;
+    private $colObjInmuebles;
 
-    public function __construct($direccion, $objPersonaAdministrador, $coleccionInmuebles)
+    public function __construct($direccion, $objAdministrador, $colObjInmuebles)
     {
-
         $this->direccion = $direccion;
-        $this->objPersonaAdministrador = $objPersonaAdministrador;
-        $this->coleccionInmuebles = $coleccionInmuebles;
+        $this->objAdministrador = $objAdministrador;
+        $this->colObjInmuebles = $colObjInmuebles;
     }
 
     public function getDireccion()
@@ -24,113 +23,86 @@ class edificio
         $this->direccion = $value;
     }
 
-    public function getColeccionInmuebles()
+    public function getObjAdministrador()
     {
-        return $this->coleccionInmuebles;
+        return $this->objAdministrador;
     }
 
-    public function setColeccionInmuebles($value)
+    public function setObjAdministrador($value)
     {
-        $this->coleccionInmuebles = $value;
+        $this->objAdministrador = $value;
     }
 
-    public function getObjPersonaAdministrador()
+    public function getColObjInmuebles()
     {
-        return $this->objPersonaAdministrador;
+        return $this->colObjInmuebles;
     }
 
-    public function setObjPersonaAdministrador($value)
+    public function setColObjInmuebles($value)
     {
-        $this->objPersonaAdministrador = $value;
+        $this->colObjInmuebles = $value;
     }
 
-    public function textoColeccionInmuebles()
+    public function mostrarInmuebles()
     {
-        $i=0;
         $texto = "";
-        foreach ($this->getColeccionInmuebles() as $inmueble) {
-            $texto .= "\ninmueble nro:" .$i+1 ."\n". $inmueble;
-            $i++;
+        foreach ($this->colObjInmuebles as $inmueble) {
+            $texto .= "\n" . $inmueble;
         }
-
         return $texto;
     }
 
-    public function darInmueblesDisponibles($tipoUso, $costoMaximo)
+    public function darInmueblesDisponibles($tipo, $costo)
     {
         $colInmueblesDisponibles = [];
-
-        foreach ($this->getColeccionInmuebles() as $inmueble) {
-            if ($inmueble->estaDisponible($tipoUso, $costoMaximo)) {
+        foreach ($this->colObjInmuebles as $inmueble) {
+            if ($inmueble->estaDispobible($tipo, $costo)) {
                 $colInmueblesDisponibles[] = $inmueble;
             }
         }
         return $colInmueblesDisponibles;
     }
 
-    public function buscarInmueble($objInmueble)
+    public function buscarInmuebles($objInmueble)
     {
-        $indice = -1;
-        $codigo = $objInmueble->getCodigo();
+        $seEncontro = false;
+        $posicion = -1;
         $i = 0;
         do {
-            if ($codigo == $this->getColeccionInmuebles()[$i]->getCodigo()) {
-                $indice = $i;
-            } else {
-                $i++;
+            if ($this->getColObjInmuebles()[$i] == $objInmueble) {
+                $seEncontro = true;
+                $posicion = $i;
             }
-        } while ($i < count($this->getColeccionInmuebles()) && $indice == -1);
+        } while (!$seEncontro && $i < count($this->getColObjInmuebles()));
 
-        return $indice;
+        return $posicion;
     }
-    
+
+    public function registrarAlquilerInmueble($tipoUso, $costoMaximo, $objPersona){
+        $colInmueblesDisponibles = $this->darInmueblesDisponibles($tipoUso, $costoMaximo);
+        $i=0;
+        $muebleMasBajo = $colInmueblesDisponibles[0];
+        foreach($colInmueblesDisponibles as $inmueble){
+            if($inmueble->getPiso() < $muebleMasBajo->getPiso()){
+                $muebleMasBajo = $inmueble;
+            }
+        }
+
+        return $muebleMasBajo->alquilar($objPersona);
+    }
+
     public function calculaCostoEdificio(){
         $costo = 0;
-        foreach ($this->getColeccionInmuebles() as $inmueble){
-            if ($inmueble->getObjInquilino() != null){
-                $costo += $inmueble->getCostoMensual();
+        foreach($this->colObjInmuebles as $inmueble){
+            if ($inmueble->getInquilino() != null){
+            $costo += $inmueble->getCosto();
             }
         }
         return $costo;
     }
 
-    public function registrarAlquilerInmueble($tipoUso, $costoMaximo, $objPersona)
-    {
-        $seRegistro = false;
-        $inmueblePisoMasChico = null;
-        foreach ($this->getColeccionInmuebles() as $inmueble) {
-            if ($inmueblePisoMasChico == null && $inmueble->estaDisponible($tipoUso, $costoMaximo)) {
-                $inmueblePisoMasChico = $inmueble;
-                $seRegistro = true;
-            }
-
-            if ($inmueblePisoMasChico > $inmueble->getNumeroPiso() && $inmueble->estaDisponible($tipoUso, $costoMaximo)) {
-                $inmueblePisoMasChico = $inmueble;
-            }
-        }
-        if ($inmueblePisoMasChico != null) {
-            $inmueblePisoMasChico->setObjInquilino($objPersona);
-            $coleccionInmuebles = $this->getColeccionInmuebles();
-            $coleccionInmuebles[] = $inmueblePisoMasChico;
-            $this->setColeccionInmuebles($coleccionInmuebles);
-        }
-
-        return $seRegistro;
-    }
-
-
-
-
-
-
-
     public function __toString()
     {
-        return " datos edificios:
-direccion: {$this->getDireccion()}
-coleccion Inmuebles del edificio: {$this->textoColeccionInmuebles()}
-Administrado del edificio:
-{$this->getObjPersonaAdministrador()}
-";
+        return "\nLa direccion es: {$this->getDireccion()} \nEl administrador es: {$this->getObjAdministrador()} \nLos inmuebles son: {$this->mostrarInmuebles()}";
     }
 }

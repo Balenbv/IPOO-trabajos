@@ -2,80 +2,97 @@
 
 class inmueble {
     private $codigo;
-    private $numeroPiso;
-    private $tipoUso;
-    private $costoMensual;
-    private $objInquilino;
+	private $piso;
+	private $tipo;
+	private $costo;
+	private $objInquilino;
 
-	public function __construct($codigo, $numeroPiso, $tipoUso, $costoMensual, $objInquilino) {
-
+	public function __construct($codigo, $piso, $tipo, $costo, $objInquilino)
+	{
 		$this->codigo = $codigo;
-		$this->numeroPiso = $numeroPiso;
-		$this->tipoUso = $tipoUso;
-		$this->costoMensual = $costoMensual;
+		$this->piso = $piso;
+		$this->tipo = $tipo;
+		$this->costo = $costo;
 		$this->objInquilino = $objInquilino;
 	}
 
-	public function getCodigo() {
+	public function getCodigo()
+	{
 		return $this->codigo;
 	}
 
-	public function setCodigo($value) {
+	public function setCodigo($value)
+	{
 		$this->codigo = $value;
 	}
 
-	public function getNumeroPiso() {
-		return $this->numeroPiso;
+	public function getPiso()
+	{
+		return $this->piso;
 	}
 
-	public function setNumeroPiso($value) {
-		$this->numeroPiso = $value;
+	public function setPiso($value)
+	{
+		$this->piso = $value;
 	}
 
-	public function getTipoUso() {
-		return $this->tipoUso;
+	public function getTipo()
+	{
+		return $this->tipo;
 	}
 
-	public function setTipoUso($value) {
-		$this->tipoUso = $value;
+	public function setTipo($value)
+	{
+		$this->tipo = $value;
 	}
 
-	public function getCostoMensual() {
-		return $this->costoMensual;
+	public function getCosto()
+	{
+		return $this->costo;
 	}
 
-	public function setCostoMensual($value) {
-		$this->costoMensual = $value;
+	public function setCosto($value)
+	{
+		$this->costo = $value;
 	}
 
-	public function getObjInquilino() {
+	public function getInquilino()
+	{
 		return $this->objInquilino;
 	}
 
-	public function setObjInquilino($value) {
+	public function setInquilino($value)
+	{
 		$this->objInquilino = $value;
 	}
 
-    public function estaDisponible($tipoUso, $costoMaximo){
-        $estaDisponible = false;
-        if ($tipoUso == $this->getTipoUso() && $costoMaximo >= $this->getCostoMensual() && $this->getObjInquilino() == null ){
-            $estaDisponible = true;
-        }
+	public function alquilar($inquilino)
+	{
+		if($this->getInquilino() == null)
+		{
+			$this->setInquilino($inquilino);
+		}
+		return $this->getInquilino() != null;
+	}
 
-        return $estaDisponible;
-    }
+	public function estaDispobible($tipo, $costo)
+	{
+		$dispobible = false;
+		if($this->getInquilino() == null && $this->getTipo() == $tipo && $this->getCosto() <= $costo)
+		{
+			$dispobible = true;
+		}
+		return $dispobible;
+	}
 
-    public function __toString()
-    {
-        return "
-datos inmueble
-codigo: {$this->getCodigo()}
-numero de piso: {$this->getNumeroPiso()}
-tipo uso: {$this->getTipoUso()}
-costo mensual: {$this->getCostoMensual()}
-Su inquilino es :
-{$this->getObjInquilino()}
+	public function __toString()
+	{
+		return "Inmueble:
+Codigo: {$this->getCodigo()}
+Piso: {$this->getPiso()}
+Tipo: {$this->getTipo()}
+Costo: {$this->getCosto()}
+Inquilino: {$this->getInquilino()}
 ";
-
-    }
+	}
 }

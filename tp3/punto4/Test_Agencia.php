@@ -37,7 +37,6 @@ $objCliente3 = new Cliente("dni","120");
 $objCliente4 = new Cliente("pasaporte","111");
 $objCliente5 = new Cliente("dni","222");
 
-
 $objVenta1 = new Venta($objFechaVenta1,$objPaqueteTuristico1,2,$objCliente1);
 $objVenta2 = new Venta($objFechaVenta2,$objPaqueteTuristico2,2,$objCliente2);
 $objVenta3 = new Venta($objFechaVenta3,$objPaqueteTuristico3,80,$objCliente3);

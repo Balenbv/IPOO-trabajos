@@ -1,8 +1,8 @@
 <?php
 
-include_once('edificio.php');
-include_once('inmueble.php');
-include_once('persona.php');
+include_once 'Edificio.php';
+include_once 'Inmueble.php';
+include_once 'Persona.php';
 
 $objAdministrador = new Persona("DNI",  27432561, "Carlos", "Martinez", 154321233);
 
